@@ -3,6 +3,7 @@ import './App.css';
 import NavBar from './components/NavBar';
 import CardList from './components/CardList';
 import BtnLoad from './components/BtnLoad';
+import Spinner from './components/Spinner';
 
 
 class App extends Component {
@@ -14,7 +15,8 @@ class App extends Component {
             card: "card text-white bg-dark",
             nav: "navbar navbar-expand-sm bg-dark navbar-dark fixed-top",
             navBtn: "btn btn-secondary",
-            navBtnText: "Theme: White"
+            navBtnText: "Theme: White",
+            spinner: "loader"
         },
         loading:false
     }
@@ -26,6 +28,7 @@ class App extends Component {
                     <NavBar toggleTheme={this.toggleTheme} theme={this.state.theme}/>
                     <CardList memes={this.state.memes} theme={this.state.theme}/>
                 </div>
+                <Spinner theme={this.state.theme} />
                 <BtnLoad loadMore={this.loadMore}/>
             </div>
         );
@@ -84,14 +87,17 @@ class App extends Component {
 
     getMemes = async (path) => {
         if (this.state.loading) return;
-        this.setState({loading: true});
+        let theme = Object.assign({}, this.state.theme);
+        theme.spinner="loader";
+        this.setState({loading: true, theme});
         const API = "https://08f935720c3d5ed1621a588fe31ac177.fossnoob.xyz/api";
         const response = await fetch(`${API}${path}`);
         const json = await response.json();
         this.setState({
             memes: [...this.state.memes].concat(json)
-        })
-        this.setState({loading: false});
+        });
+        theme.spinner="";
+        this.setState({loading: false, theme});
     }
 }
 
