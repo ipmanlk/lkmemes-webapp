@@ -5,3 +5,7 @@
 .body {
     padding-bottom: 20px;
 }
+
+.hidden {
+    display: none;
+}

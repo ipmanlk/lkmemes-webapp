@@ -16,7 +16,8 @@ class App extends Component {
             nav: "navbar navbar-expand-sm bg-dark navbar-dark fixed-top",
             navBtn: "btn btn-secondary",
             navBtnText: "Theme: White",
-            spinner: "loader"
+            spinner: "loader",
+            btnLoad: "btn btn-success btn-block"
         },
         loading:false
     }
@@ -29,7 +30,7 @@ class App extends Component {
                     <CardList memes={this.state.memes} theme={this.state.theme}/>
                 </div>
                 <Spinner theme={this.state.theme} />
-                <BtnLoad loadMore={this.loadMore}/>
+                <BtnLoad loadMore={this.loadMore} theme={this.state.theme}/>
             </div>
         );
     }
@@ -87,17 +88,27 @@ class App extends Component {
 
     getMemes = async (path) => {
         if (this.state.loading) return;
-        let theme = Object.assign({}, this.state.theme);
-        theme.spinner="loader";
-        this.setState({loading: true, theme});
+        this.setLoading(true);
         const API = "https://08f935720c3d5ed1621a588fe31ac177.fossnoob.xyz/api";
         const response = await fetch(`${API}${path}`);
         const json = await response.json();
         this.setState({
             memes: [...this.state.memes].concat(json)
         });
-        theme.spinner="";
-        this.setState({loading: false, theme});
+        this.setLoading(false);
+    }
+
+    setLoading = (isTrue) => {
+        let theme = Object.assign({}, this.state.theme);
+        if (isTrue) {
+            theme.spinner="loader";
+            theme.btnLoad="btn btn-success btn-block hidden";
+            this.setState({loading: true, theme});
+        } else {
+            theme.spinner="";
+            theme.btnLoad="btn btn-success btn-block";
+            this.setState({loading: false, theme});
+        }
     }
 }
 
