@@ -22,7 +22,7 @@ class Card extends Component {
     getSource = (url) => {
         try {
             const urlParts = url.split("/");
-            const source = urlParts[urlParts.length - 3];
+            const source = urlParts[urlParts.length - 1];
             return (
                 <a href={url}>
                     {source}
