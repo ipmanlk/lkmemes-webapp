@@ -3,7 +3,9 @@ const app = express();
 
 app.use('/', express.static('public'))
 
-const server = app.listen(3000, () => {
-  const host = server.address().address;
-  const port = server.address().port;
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`App listening on port ${PORT}`);
+  console.log('Press Ctrl+C to quit.');
 });
