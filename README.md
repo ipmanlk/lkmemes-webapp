@@ -1,4 +1,6 @@
 # LKMemes WebApp
+This is an app made with React to check latest Sri Lankan memes.  
+
 
 ## Getting Started
 
